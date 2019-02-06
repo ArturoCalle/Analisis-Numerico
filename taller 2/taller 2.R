@@ -44,34 +44,34 @@ secante <- function(x0,x1) {
 }
 secante(0,1)
 
-# Remueve todos los objetos creados
-rm(list=ls())
-Fx <- function(x) exp(x) - pi*x
-F1x <- function(x) exp(x)/pi
-
-# Halla la raiz de Fx
-puntoFijo <- function(a,b)
-{
-  x1<-a
-  it<-0
-  while(x1<b)
-  {
-    it<-it+1
-    resultado<- F1x(x1)
-    if((x1<=resultado)&&(x1+0.1>=resultado)) 
-      break
-    x1<-x1+0.1
-  }
-  c<-abs(x1+0.1-x1)/abs(x1+0.1)
-  while (x1<b) 
-  {
-    resultado<- F1x(x1)
-    if((x1<=resultado)&&(x1+0.01>=resultado)) 
-      break
-    x1<-x1+0.01
-    c<-abs(x1+0.01-x1)/abs(x1+0.01)
-  }
+  # Remueve todos los objetos creados
+  rm(list=ls())
+  Fx <- function(x) exp(x) - pi*x
+  F1x <- function(x) exp(x)/pi
   
-  cat("punto fijo: ", x1, " error: ", c, "iteraciones: ", it)
-}
-puntoFijo(0,1)
+  # Halla la raiz de Fx
+  puntoFijo <- function(a,b)
+  {
+    x1<-a
+    it<-0
+    while(x1<b)
+    {
+      
+      resultado<- F1x(x1)
+      if((x1<=resultado)&&(x1+0.1>=resultado)) 
+        break
+      x1<-x1+0.1
+    }
+    c<-abs(x1+0.1-x1)/abs(x1+0.1)
+    while (c>1.e-4) 
+    {
+      it<-it+1
+      resultado<- F1x(x1)
+      if((x1<=resultado)&&(x1+0.01>=resultado)) 
+        break
+      x1<-Fx(x1+0.01)
+      c<-abs(x1+0.01-x1)/abs(x1+0.01)
+      cat("punto fijo: ", x1, " error: ", c, "iteraciones: ", it,"\n")
+    } 
+  }
+  puntoFijo(0,1)
