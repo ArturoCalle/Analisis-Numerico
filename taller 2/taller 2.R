@@ -44,6 +44,7 @@ secante <- function(x0,x1) {
 }
 secante(0,1)
 
+ 
   # Remueve todos los objetos creados
   rm(list=ls())
   Fx <- function(x) exp(x) - pi*x
@@ -56,7 +57,7 @@ secante(0,1)
     it<-0
     while(x1<b)
     {
-      
+      it<-it+1
       resultado<- F1x(x1)
       if((x1<=resultado)&&(x1+0.1>=resultado)) 
         break
@@ -71,7 +72,27 @@ secante(0,1)
         break
       x1<-Fx(x1+0.01)
       c<-abs(x1+0.01-x1)/abs(x1+0.01)
-      cat("punto fijo: ", x1, " error: ", c, "iteraciones: ", it,"\n")
-    } 
+      cat("x= ", x1, " E=", c, "iteraciones: ", it,"\n")
+    }
+    
+    
   }
   puntoFijo(0,1)
+  
+  # Define funciones
+  Fx <- function(x) exp(x) - pi*x;
+  dF <- function(x) exp(x) - pi;
+  error <- function(x) 10^(-x);
+  
+  # Halla raiz usando metodo de Newton-Raphson
+  newton.raphson <- function(a,iteracion) {
+    x <- a-(Fx(a)/dF(a))
+    if((x-a)<error(8)){
+      cat("\n\niteracion numero: ",iteracion,"\nla raiz en el punto:",x,"\nError de: ",error(8))
+    }else{
+      cat("\n\niteracion numero: ",iteracion,"\nla raiz en el punto:",x,"\nError de: ",error(8))
+      newton.raphson(x,iteracion+1)
+    }
+  }
+  
+  newton.raphson(0,1)
